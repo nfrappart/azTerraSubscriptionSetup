@@ -71,7 +71,7 @@
                 },
                 "outbound":{},
                 "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "AzureFirewallSubnet":{
                 "subnetAddressPrefix":["10.255.0.128/26"],
@@ -82,7 +82,7 @@
                     "Comment":""
                 },
                 "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "GatewaySubnet":{
                 "subnetAddressPrefix":["10.255.0.192/27"],
@@ -93,7 +93,7 @@
                     "Comment":""
                 },
                 "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "AzureBastionSubnet":{
                 "subnetAddressPrefix":["10.255.0.224/27"],
@@ -252,7 +252,7 @@
                     }
                 },
                 "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             }
         }
     },
@@ -318,8 +318,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "aksPrdSubnet":{
                 "subnetAddressPrefix":["10.254.252.0/22"],
@@ -368,8 +367,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "pgsqlPrdSubnet":{
                 "subnetAddressPrefix":["10.254.251.128/25"],
@@ -418,8 +416,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "privateEndpointPrdSubnet":{
                 "subnetAddressPrefix":["10.254.250.0/24"],
@@ -468,8 +465,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             }
         }
     },
@@ -534,8 +530,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "aksDevSubnet":{
                 "subnetAddressPrefix":["10.253.252.0/22"],
@@ -584,8 +579,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "pgsqlDevSubnet":{
                 "subnetAddressPrefix":["10.253.251.128/25"],
@@ -634,8 +628,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             },
             "privateEndpointDevSubnet":{
                 "subnetAddressPrefix":["10.253.250.0/24"],
@@ -684,8 +677,7 @@
                     }
                 },
                 "outbound":{},
-                "nextHopFirewall":"false",
-                "routesToVa":{}
+                "routesToFirewall":{}
             }
         }
     }

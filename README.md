@@ -1,4 +1,4 @@
-# Azure Virtual Desktop Setup Module
+# Azure Subscription Setup Module
 ## What it does:
 This module creates all ressources to build a Hub & Spoke network architecture
 - 3 Resource Groups
@@ -46,7 +46,7 @@ terraform {
 data "azurerm_client_config" "current" {}
 
 module "subsetup" {
-  source = "../../../github/terraform-az-modules/azTerraSubscriptionSetup"
+  source = "github.com/nfrappart/terraform-az-modules/azTerraSubscriptionSetup?ref=v1.0.0"
   customerName        = "natedemo"   #required.
   privDomain = "priv.natedemo.fr"    #required.
   pubDomain = "natedemo.fr"          #required.
@@ -131,7 +131,7 @@ Herre is how it looks:
 Choose your options depending on your needs, but you can probably use them as above if you're starting. 
 
 Don't forget to fill in your remote vnet `subscription_id`.
-> subscription id is a trick to allow you to peer Vnets in different subscriptions. If all your infrastructure is in the same subscription, then the same id will be used everywhere for all your peerings
+> subscription id is a trick to allow you to peer Vnets in different subscriptions. If all your infrastructure is in the same subscription, then use the same everywhere for all your peerings
 
 Keys will be used as name for your peerings.
 
@@ -209,7 +209,7 @@ The Subnet attribute is obviously the most complete one, see a redacted version 
         },
         "outbound":{},
         "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "AzureFirewallSubnet":{
         "subnetAddressPrefix":["10.10.0.128/26"],
@@ -218,8 +218,7 @@ The Subnet attribute is obviously the most complete one, see a redacted version 
         "customTags":{
           (redacted...)
         },
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       }
     }
   (redacted...)
@@ -239,12 +238,9 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
 
 `customTags` is a simple map to add your personalized default tags.
 
-`nextHopFirewall` is a flag. If set to `true` all routes provided in `routesToVa` will have the Azure Firewall as next hop. 
+`routesToFirewall` is a map which, when not empty, will populate UDR and Route Table for the related subnet. This attribute will use keys as udr name in the format `subnetNameToKeyname`, and value as destination network (value must be a valid CIDR block), using Azure Firewall as next hop IP.
 
 **OBVIOUSLY** to use this, you need to set the input variable `deployAzureFirewall` to `true` and provide an `AzureFirewallSubnet` in you subnet bloc (preferably in your hub VNet).
-
-`routesToVa` is a map to use, as said above, in conjunction with `nextHopFirewall` set to `true`. This attribute will use keys as udr name, and value as destination network, using Azure Firewall as next hop IP.
-
 
 ## Example with hub and one spoke:
 ```json
@@ -311,8 +307,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           }
         },
         "outbound":{},
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "AzureFirewallSubnet":{
         "subnetAddressPrefix":["10.10.0.128/26"],
@@ -322,8 +317,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           "Contact":"",
           "Comment":""
         },
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "GatewaySubnet":{
         "subnetAddressPrefix":["10.10.0.192/27"],
@@ -333,8 +327,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           "Contact":"",
           "Comment":""
         },
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "AzureBastionSubnet":{
         "subnetAddressPrefix":["10.10.0.224/27"],
@@ -492,8 +485,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
             "destination_address_prefix":"*"
           }
         },
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       }
     }
   },
@@ -559,8 +551,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           }
         },
         "outbound":{},
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "aksSpoke1Subnet":{
         "subnetAddressPrefix":["10.11.252.0/22"],
@@ -609,8 +600,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           }
         },
         "outbound":{},
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "pgsqlSpoke1Subnet":{
         "subnetAddressPrefix":["10.11.251.128/25"],
@@ -659,8 +649,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           }
         },
         "outbound":{},
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       },
       "privateEndpointSpoke1Subnet":{
         "subnetAddressPrefix":["10.11.250.0/24"],
@@ -709,8 +698,7 @@ The `subnetAddressPrefix`is obviously required as your CIDR bloc for said subnet
           }
         },
         "outbound":{},
-        "nextHopFirewall":"false",
-        "routesToVa":{}
+        "routesToFirewall":{}
       }
     }
   }

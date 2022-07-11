@@ -46,8 +46,7 @@ locals {
       addressPrefix   = v.subnetAddressPrefix,
       nsg             = v.nsg,
       delegation      = v.delegation,
-      nextHopFirewall = v.nextHopFirewall,
-      routesToVa      = v.routesToVa,
+      routesToFirewall      = v.routesToFirewall,
       customTags      = v.customTags
       }
     ]
@@ -59,23 +58,21 @@ locals {
       addressPrefix   = i.addressPrefix,
       nsg             = i.nsg,
       delegation      = i.delegation,
-      nextHopFirewall = i.nextHopFirewall,
-      routesToVa      = i.routesToVa,
+      routesToFirewall = i.routesToFirewall,
       customTags      = i.customTags
     }
   }
   routes_conf = { for k, v in local.subnets_map :
     k => {
-      routesToVa = v.routesToVa, customTags = v.customTags, nsg = v.nsg
-    } if v.nextHopFirewall == true
+      routesToFirewall = v.routesToFirewall, customTags = v.customTags, nsg = v.nsg
+    } if v.routesToFirewall != {}
   }
 
   udr_list = flatten([for k, v in local.subnets_map :
-    [for k_udr, v_udr in v.routesToVa : {
+    [for k_udr, v_udr in v.routesToFirewall : {
       udr             = "${k}To${title(k_udr)}",
       rt              = "rt${title(k)}",
-      destination     = v_udr,
-      nextHopFirewall = v.nextHopFirewall
+      destination     = v_udr
       }
     ]
   ])
