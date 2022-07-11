@@ -1,0 +1,20 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+#*.tfvars
+
+# .old temp files
+*.old
+*.tf.old
+
+*.lock.hcl
+
+*.DS_Store
+
+networks.json
+default.tfvars
