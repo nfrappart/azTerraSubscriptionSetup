@@ -5,13 +5,8 @@ provider "azurerm" {
 terraform {
   required_providers {
     azurerm = {
-      version = "3.10.0"
+      version = "3.24.0"
     }
     random  = {}
-  } /*
-  backend "azurerm" {
-    #storage_account_name = ""
-    #container_name       = ""
-    key                  = "coreservices.tfstate"
-  }*/
+  }
 }

@@ -231,7 +231,7 @@ resource "azurerm_subnet" "subnets" {
   resource_group_name                            = azurerm_resource_group.rg["rgCore"].name
   virtual_network_name                           = azurerm_virtual_network.vnet[each.value.vnet].name
   address_prefixes                               = each.value.addressPrefix
-  enforce_private_link_endpoint_network_policies = true
+  private_endpoint_network_policies_enabled      = true
   service_endpoints = [
     "Microsoft.AzureCosmosDB",
     "Microsoft.KeyVault",
